@@ -14,7 +14,6 @@ open(my $FILE, '>output.txt');
 # Split data up by lines
 my(@lines) = split(/[\r\n]/, $input);
 
-# Loop through each do() section, each $enabled will then contain "<data>don't()<data>".
 my $count = 0;
 foreach my $y (0..$#lines) {
 	foreach my $x (0..length($lines[0])) {
