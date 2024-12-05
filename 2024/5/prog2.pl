@@ -19,14 +19,13 @@ my(@printorders) = split(/[\r\n]/, $orders);
 # Find valid printorders
 my $sum = 0;
 foreach my $printorder (@printorders) {
-	my @values = split(/,/, $printorder);
 	my $ordered = CheckValidAndReorder($printorder, @rulesets);
 	if ($printorder eq $ordered) {
 		# Ok
 		print $FILE $printorder.', OK'."\n";
 	} else {
 		# Parse to array reordered
-		@values = split(/,/, $ordered);
+		my(@values) = split(/,/, $ordered);
 		my $middlevalue = $values[int($#values / 2)];
 		$sum += $middlevalue;
 		print $FILE $printorder.', REORDERED, Middlevalue= '.$middlevalue.' AccSum='.$sum."\n";
@@ -47,10 +46,8 @@ exit;
 sub CheckValidAndReorder {
 	my($printorder, @rulesets) = @_;
 	
-	my $reorder = 1;
-	
 	# Loop until no rules are violated
-	NEWREORDER: while ($reorder) {
+	NEWREORDER: while (1) {
 		foreach my $rule (@rulesets) {
 			my($val1, $val2) = $rule =~ /(\d+)\|(\d+)/;
 			if ($printorder =~ /$val2\D+$val1/) {
@@ -61,8 +58,7 @@ sub CheckValidAndReorder {
 				next NEWREORDER;
 			}
 		}
-		$reorder = 0;
+		# All rules are PASS
+		return $printorder;
 	}
-
-	return $printorder;
 }
