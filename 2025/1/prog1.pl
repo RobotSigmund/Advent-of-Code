@@ -4,7 +4,7 @@ use strict;
 
 
 # Read input into $input
-open(my $IN, '<input.txt');
+open(my $IN, '<input.txt') or die('Cant open input.txt');
 read($IN, my $input, -s $IN);
 close($IN);
 
@@ -26,6 +26,6 @@ my $output = $dial_zero_count;
 
 # Write output into 'output.txt'
 open(my $OUT, '>output1.txt');
-print $OUT $output;
-print $output;
+print $OUT $output . "\n";
+print $output . "\n";
 close($OUT);
